@@ -1,4 +1,4 @@
-﻿namespace Birdwatcher.Enum {
+﻿namespace Birdwatcher.Procedural.Enum {
 
     public enum BirdPart {
 
@@ -6,6 +6,7 @@
         BODY,
         WINGS,
         LEGS,
+        TAIL,
         COLOR_PATTERN
     }
 
@@ -31,7 +32,7 @@
         HUGE,
     }
 
-    public enum Wings {
+    public enum Wing {
 
         FAST, //Good for zooming. Ex: Falcons
         FLAPPY, //Good for darting around yards. Ex: Sparrows
@@ -40,6 +41,19 @@
     }
 
     public enum Legs {
-        
+
+        GENERIC,
+        LONG,
+        RAPTORIAL,
+        PADDLING,
+        GRIPPING,
+    }
+
+    public enum Tail {
+
+        BASIC,
+        LONG,
+        FORKED,
+        MAJESTIC,
     }
 }

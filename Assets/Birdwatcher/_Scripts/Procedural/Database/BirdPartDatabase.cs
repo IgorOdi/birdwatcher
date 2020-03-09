@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using Birdwatcher.Enum;
+using Birdwatcher.Procedural.Enum;
 using UnityEngine;
 
-namespace Birdwatcher.Database {
+namespace Birdwatcher.Procedural.Database {
 
-    public class BirdPartDatabase<T> : ScriptableObject {
+    public class BirdPartDatabase<T> : ScriptableObject where T : System.Enum {
 
         public T databaseType;
         [SerializeField]
@@ -30,8 +30,11 @@ namespace Birdwatcher.Database {
     public class BirdBodyDatabase : BirdPartDatabase<Body> { }
 
     [CreateAssetMenu (fileName = "New Wing Database", menuName = "Database/Bird/Wing")]
-    public class BirdWingDatabase : BirdPartDatabase<Wings> { }
+    public class BirdWingDatabase : BirdPartDatabase<Wing> { }
 
     [CreateAssetMenu (fileName = "New Leg Database", menuName = "Database/Bird/Leg")]
-    public class BirdLegDatabase : BirdPartDatabase<Legs> { }
+    public class BirdLegsDatabase : BirdPartDatabase<Legs> { }
+
+    [CreateAssetMenu (fileName = "New Tail Database", menuName = "Database/Bird/Tail")]
+    public class BirdTailDatabase : BirdPartDatabase<Tail> { }
 }

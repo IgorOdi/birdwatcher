@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: Beak Database
+  m_EditorClassIdentifier: Procedural:Birdwatcher.Procedural.Database:BirdBeakDatabase
+  databaseType: 0
+  partList:
+  - {fileID: 5437733813081549630, guid: 8a5e824c1b73430478b2db5a08dedda2, type: 3}
+  - {fileID: 7952722166454601373, guid: 657bf05649d837b48aff42d0fad1575c, type: 3}
+  - {fileID: 6890046855137942942, guid: a6d827ad4f91d4b489163b57b71bce82, type: 3}
