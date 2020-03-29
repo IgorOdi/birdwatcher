@@ -14,9 +14,6 @@ namespace Birdwatcher.Procedural.Database {
         public static List<BirdPartDatabase<Legs>> birdLegsDatabases = new List<BirdPartDatabase<Legs>> ();
         public static List<BirdPartDatabase<Tail>> birdTailDatabases = new List<BirdPartDatabase<Tail>> ();
 
-        private static string DATABASE_FOLDER = "Database";
-        private static string BIRD_FOLDER = DATABASE_FOLDER + "/Birds";
-
         public static void LoadDatabases () {
 
             birdBeakDatabases = DatabaseLoader.LoadDatabase<BirdBeakDatabase, Beak> ();
