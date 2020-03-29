@@ -1,12 +1,17 @@
 {
-    "name": "Procedural",
-    "references": [],
+    "name": "Birdwatcher.UI",
+    "references": [
+        "GUID:15b5531383077c848bf6a5b1e798c847"
+    ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": true,
-    "precompiledReferences": [],
+    "precompiledReferences": [
+        "DOTween.dll",
+        "DOTweenEditor.dll"
+    ],
     "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": []

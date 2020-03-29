@@ -1,5 +1,5 @@
 ﻿using Birdwatcher.Procedural.Database;
-using Birdwatcher.Procedural.Enum;
+using Birdwatcher.Model.Birds;
 using UnityEngine;
 
 namespace Birdwatcher.Procedural.Generator {

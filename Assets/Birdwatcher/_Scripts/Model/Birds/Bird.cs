@@ -1,6 +1,4 @@
-﻿using Birdwatcher.Procedural.Enum;
-
-namespace Birdwatcher.Procedural.Generator {
+﻿namespace Birdwatcher.Model.Birds {
 
     public class Bird {
 
