@@ -1,6 +1,8 @@
 {
-    "name": "Gameplay",
-    "references": [],
+    "name": "Birdwatcher.Procedural",
+    "references": [
+        "GUID:22e539988cd5b5844b9f9585e622b6a6"
+    ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],

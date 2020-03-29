@@ -1,12 +1,17 @@
 {
-    "name": "UI",
-    "references": [],
+    "name": "Birdwatcher.Controller",
+    "references": [
+        "GUID:15b5531383077c848bf6a5b1e798c847",
+        "GUID:22e539988cd5b5844b9f9585e622b6a6"
+    ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": true,
-    "precompiledReferences": [],
+    "precompiledReferences": [
+        "DOTween.dll"
+    ],
     "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": []

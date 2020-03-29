@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Birdwatcher.Procedural.Database;
-using Birdwatcher.Procedural.Enum;
+﻿using Birdwatcher.Procedural.Database;
+using Birdwatcher.Model.Birds;
 using UnityEngine;
 
 namespace Birdwatcher.Procedural.Generator {

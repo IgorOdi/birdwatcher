@@ -1,4 +1,4 @@
-﻿namespace Birdwatcher.Procedural.Enum {
+﻿namespace Birdwatcher.Model.Birds {
 
     public enum BirdPart {
 
