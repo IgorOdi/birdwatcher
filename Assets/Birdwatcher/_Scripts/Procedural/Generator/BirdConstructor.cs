@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Birdwatcher.Model.Birds;
 using Birdwatcher.Procedural.Database;
-using Birdwatcher.Procedural.Enum;
 using UnityEngine;
 
 namespace Birdwatcher.Procedural.Generator {
@@ -23,11 +21,13 @@ namespace Birdwatcher.Procedural.Generator {
 
             SetDatabases (bird);
 
-            var beakGO = beakDb.GetRandomPart (bird.seed);
-            var bodyGO = bodyDb.GetRandomPart (bird.seed);
-            var wingGO = wingDb.GetRandomPart (bird.seed);
-            var legsGO = legsDb.GetRandomPart (bird.seed);
-            var tailGO = tailDb.GetRandomPart (bird.seed);
+            System.Random random = new System.Random (bird.seed);
+
+            var beakGO = beakDb.GetRandomPart (random.Next());
+            var bodyGO = bodyDb.GetRandomPart (random.Next());
+            var wingGO = wingDb.GetRandomPart (random.Next());
+            var legsGO = legsDb.GetRandomPart (random.Next());
+            var tailGO = tailDb.GetRandomPart (random.Next());
 
             GameObject instantiatedBody = Instantiate (bodyGO);
             CreatePart (beakGO, instantiatedBody.transform.Find (BEAK_SLOT));
