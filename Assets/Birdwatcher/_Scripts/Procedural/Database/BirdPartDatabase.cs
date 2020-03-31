@@ -11,9 +11,9 @@ namespace Birdwatcher.Procedural.Database {
         [SerializeField]
         protected List<GameObject> partList = new List<GameObject> ();
 
-        public static int GetLength() {
+        public static int GetLength () {
 
-            return System.Enum.GetValues(typeof(T)).Length;
+            return System.Enum.GetValues (typeof (T)).Length;
         }
 
         public GameObject GetRandomPart (int seed) {

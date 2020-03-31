@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ProceduralTests : MonoBehaviour {
 
-    [SerializeField, Range (-6000, 6000)]
+    [SerializeField, Range (0, 12000)]
     private int seed;
 
     [ContextMenu ("Generate Bird")]
