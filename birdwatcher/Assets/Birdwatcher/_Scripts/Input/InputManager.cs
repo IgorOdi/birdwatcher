@@ -7,10 +7,27 @@ namespace Birdwatcher.Input {
 
     public class InputManager : MonoBehaviour {
 
+        public static InputManager Instance {
+            get { return instance; }
+            private set { instance = value; }
+        }
+        private static InputManager instance;
+
         private Dictionary<RegistrableKeys, InputKey> registeredKeys = new Dictionary<RegistrableKeys, InputKey> ();
 
         private const string HORIZONTAL = "Horizontal";
         private const string VERTICAL = "Vertical";
+
+        void Awake () => InitializeInstance ();
+
+        public void InitializeInstance () {
+
+            if (Instance != null) {
+
+                Destroy (Instance.gameObject);
+            }
+            Instance = this;
+        }
 
         public void RegisterKey (RegistrableKeys keyID, KeyCode keyCode) {
 
@@ -20,7 +37,7 @@ namespace Birdwatcher.Input {
             registeredKeys.Add (keyID, new InputKey (keyCode));
         }
 
-        public float GetAxis (Axis axis, bool raw = true) {
+        public float GetAxis (KeyAxis axis, bool raw = true) {
 
             return raw ? UnityEngine.Input.GetAxisRaw (AxisToString (axis)) : UnityEngine.Input.GetAxis (AxisToString (axis));
         }
@@ -30,9 +47,20 @@ namespace Birdwatcher.Input {
             return registeredKeys.Where (x => x.Value.Equals (keyID)).FirstOrDefault ().Value;
         }
 
-        private string AxisToString (Axis axis) {
+        public float GetMouseAxis (MouseAxis axis) {
 
-            return axis.Equals (Axis.HORIZONTAL) ? HORIZONTAL : VERTICAL;
+            string axisString = axis.Equals (MouseAxis.X) ? "X" : "Y";
+            return UnityEngine.Input.GetAxis (axisString);
+        }
+
+        public void ClearKeys () {
+
+            registeredKeys.Clear ();
+        }
+
+        private string AxisToString (KeyAxis axis) {
+
+            return axis.Equals (KeyAxis.HORIZONTAL) ? HORIZONTAL : VERTICAL;
         }
 
         private void Update () {

@@ -8,9 +8,15 @@
         CANCEL,
     }
 
-    public enum Axis {
+    public enum KeyAxis {
 
         HORIZONTAL,
         VERTICAL
+    }
+
+    public enum MouseAxis {
+
+        X,
+        Y
     }
 }
