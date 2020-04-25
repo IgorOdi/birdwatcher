@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Birdwatcher.Procedural.Enum;
+using Birdwatcher.Model.Birds;
 using UnityEngine;
 
 namespace Birdwatcher.Procedural.Database {

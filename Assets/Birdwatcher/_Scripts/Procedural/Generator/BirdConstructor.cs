@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 ﻿using Birdwatcher.Model.Birds;
 using Birdwatcher.Procedural.Database;
+=======
+﻿using Birdwatcher.Procedural.Database;
+using Birdwatcher.Model.Birds;
+>>>>>>> feature/player
 using UnityEngine;
 
 namespace Birdwatcher.Procedural.Generator {
