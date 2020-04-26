@@ -18,6 +18,9 @@ namespace Birdwatcher.Input {
         private const string HORIZONTAL = "Horizontal";
         private const string VERTICAL = "Vertical";
 
+        private const string MOUSE_X = "Mouse X";
+        private const string MOUSE_Y = "Mouse Y";
+
         void Awake () => InitializeInstance ();
 
         public void InitializeInstance () {
@@ -39,7 +42,8 @@ namespace Birdwatcher.Input {
 
         public float GetAxis (KeyAxis axis, bool raw = true) {
 
-            return raw ? UnityEngine.Input.GetAxisRaw (AxisToString (axis)) : UnityEngine.Input.GetAxis (AxisToString (axis));
+            string axisString = axis.Equals (KeyAxis.HORIZONTAL) ? HORIZONTAL : VERTICAL;
+            return raw ? UnityEngine.Input.GetAxisRaw (axisString) : UnityEngine.Input.GetAxis (axisString);
         }
 
         public InputKey GetKey (RegistrableKeys keyID) {
@@ -49,18 +53,13 @@ namespace Birdwatcher.Input {
 
         public float GetMouseAxis (MouseAxis axis) {
 
-            string axisString = axis.Equals (MouseAxis.X) ? "X" : "Y";
+            string axisString = axis.Equals (MouseAxis.X) ? MOUSE_X : MOUSE_Y;
             return UnityEngine.Input.GetAxis (axisString);
         }
 
         public void ClearKeys () {
 
             registeredKeys.Clear ();
-        }
-
-        private string AxisToString (KeyAxis axis) {
-
-            return axis.Equals (KeyAxis.HORIZONTAL) ? HORIZONTAL : VERTICAL;
         }
 
         private void Update () {
