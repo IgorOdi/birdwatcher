@@ -15,11 +15,8 @@ namespace Birdwatcher.Input {
 
         private Dictionary<RegistrableKeys, InputKey> registeredKeys = new Dictionary<RegistrableKeys, InputKey> ();
 
-        private const string HORIZONTAL = "Horizontal";
-        private const string VERTICAL = "Vertical";
-
-        private const string MOUSE_X = "Mouse X";
-        private const string MOUSE_Y = "Mouse Y";
+        private static readonly List<string> KEY_AXIS = new List<string> { "Horizontal", "Vertical" };
+        private static readonly List<string> MOUSE_AXIS = new List<string> { "Mouse X", "Mouse Y", "Mouse ScrollWheel" };
 
         void Awake () => InitializeInstance ();
 
@@ -32,18 +29,19 @@ namespace Birdwatcher.Input {
             Instance = this;
         }
 
-        public void RegisterKey (RegistrableKeys keyID, KeyCode keyCode) {
+        public InputKey RegisterKey (RegistrableKeys keyID, KeyCode keyCode) {
 
             if (registeredKeys.ContainsKey (keyID))
                 throw new System.Exception ("Key já registrada");
 
-            registeredKeys.Add (keyID, new InputKey (keyCode));
+            var newKey = new InputKey (keyCode);
+            registeredKeys.Add (keyID, newKey);
+            return newKey;
         }
 
-        public float GetAxis (KeyAxis axis, bool raw = true) {
+        public void UnregisterKey (RegistrableKeys keyID) {
 
-            string axisString = axis.Equals (KeyAxis.HORIZONTAL) ? HORIZONTAL : VERTICAL;
-            return raw ? UnityEngine.Input.GetAxisRaw (axisString) : UnityEngine.Input.GetAxis (axisString);
+            registeredKeys.Remove (keyID);
         }
 
         public InputKey GetKey (RegistrableKeys keyID) {
@@ -51,10 +49,14 @@ namespace Birdwatcher.Input {
             return registeredKeys.Where (x => x.Value.Equals (keyID)).FirstOrDefault ().Value;
         }
 
+        public float GetAxis (KeyAxis axis, bool raw = true) {
+
+            return raw ? UnityEngine.Input.GetAxisRaw (KEY_AXIS[(int) axis]) : UnityEngine.Input.GetAxis (KEY_AXIS[(int) axis]);
+        }
+
         public float GetMouseAxis (MouseAxis axis) {
 
-            string axisString = axis.Equals (MouseAxis.X) ? MOUSE_X : MOUSE_Y;
-            return UnityEngine.Input.GetAxis (axisString);
+            return UnityEngine.Input.GetAxis (MOUSE_AXIS[(int) axis]);
         }
 
         public void ClearKeys () {

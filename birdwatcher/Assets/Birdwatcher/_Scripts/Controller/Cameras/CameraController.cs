@@ -1,32 +1,34 @@
 ﻿using Birdwatcher.Input;
 using Birdwatcher.Input.Enum;
+using Cinemachine;
 using UnityEngine;
 
 namespace Birdwatcher.Controller.Cameras {
 
     public class CameraController : MonoBehaviour {
 
-        private Camera cam;
-        [SerializeField]
-        private Transform lookPoint;
+        protected CinemachineVirtualCamera virtualCamera;
 
         private float mouseVerticalLook;
         private float mouseHorizontalLook;
 
         private const float BASE_SENSIBILITY = 3;
-        private const float BASE_OFFSET = -4.5f;
 
-        void Awake () => Initialize ();
+        void Start () => Initialize ();
 
-        public void Initialize () {
+        public virtual void Initialize () {
 
-            //this.lookPoint = lookPoint;
-            cam = GetComponentInChildren<Camera> ();
-            SetOffset (Vector3.forward * BASE_OFFSET);
+            virtualCamera = GetComponent<CinemachineVirtualCamera> ();
 
             //Cursor
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        public void SetLookPoint(Transform lookPoint) {
+
+            virtualCamera.m_Follow = lookPoint;
+            virtualCamera.m_LookAt = lookPoint;
         }
 
         private void LateUpdate () {
@@ -36,13 +38,6 @@ namespace Birdwatcher.Controller.Cameras {
 
             mouseHorizontalLook += InputManager.Instance.GetMouseAxis (MouseAxis.X) * BASE_SENSIBILITY;
             transform.eulerAngles = Vector3.up * mouseHorizontalLook + Vector3.left * mouseVerticalLook;
-
-            transform.position = Vector3.Lerp (transform.position, lookPoint.position, 0.05f);
-        }
-
-        private void SetOffset (Vector3 offset) {
-
-            cam.transform.localPosition = offset;
         }
     }
 }
