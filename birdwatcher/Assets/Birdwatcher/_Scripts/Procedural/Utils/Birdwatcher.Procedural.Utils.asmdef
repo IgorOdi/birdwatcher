@@ -1,0 +1,15 @@
+{
+    "name": "Birdwatcher.Procedural.Utils",
+    "references": [
+        "GUID:edf2e65fca6aa2e4b81e8af404f9d99f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

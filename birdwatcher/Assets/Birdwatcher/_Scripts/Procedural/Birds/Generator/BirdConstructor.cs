@@ -1,8 +1,8 @@
 using Birdwatcher.Model.Birds;
-using Birdwatcher.Procedural.Database;
+using Birdwatcher.Procedural.Birds.Database;
 using UnityEngine;
 
-namespace Birdwatcher.Procedural.Generator {
+namespace Birdwatcher.Procedural.Birds.Generator {
 
     public class BirdConstructor : MonoBehaviour {
 

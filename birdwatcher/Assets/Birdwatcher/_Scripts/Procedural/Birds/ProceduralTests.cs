@@ -1,6 +1,6 @@
-﻿using Birdwatcher.Procedural.Database;
+﻿using Birdwatcher.Procedural.Birds.Database;
 using Birdwatcher.Model.Birds;
-using Birdwatcher.Procedural.Generator;
+using Birdwatcher.Procedural.Birds.Generator;
 using UnityEngine;
 
 public class ProceduralTests : MonoBehaviour {

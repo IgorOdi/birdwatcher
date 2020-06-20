@@ -2,7 +2,7 @@
 using Birdwatcher.Model.Birds;
 using UnityEngine;
 
-namespace Birdwatcher.Procedural.Database {
+namespace Birdwatcher.Procedural.Birds.Database {
 
     public class BirdPartDatabase<T> : ScriptableObject where T : System.Enum {
 

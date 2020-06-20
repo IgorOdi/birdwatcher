@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Birdwatcher.Procedural.Database {
+namespace Birdwatcher.Procedural.Birds.Database {
 
     public static class DatabaseLoader {
 
