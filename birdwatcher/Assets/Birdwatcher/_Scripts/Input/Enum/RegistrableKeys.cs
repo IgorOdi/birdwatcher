@@ -17,6 +17,7 @@
     public enum MouseAxis {
 
         X,
-        Y
+        Y,
+        SCROLL_WHEEL
     }
 }
