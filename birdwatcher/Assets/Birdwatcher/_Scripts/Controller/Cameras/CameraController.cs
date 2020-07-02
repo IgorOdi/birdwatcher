@@ -2,7 +2,7 @@
 using Cinemachine;
 using UnityEngine;
 
-namespace Birdwatcher.Cameras.Controller {
+namespace Birdwatcher.Controller.Cameras {
 
     public class CameraController : MonoBehaviour {
 

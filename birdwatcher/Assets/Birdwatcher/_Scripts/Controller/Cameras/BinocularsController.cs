@@ -1,9 +1,8 @@
 ﻿using Birdwatcher.Input;
-using Birdwatcher.Cameras.Model;
-using DG.Tweening;
+using Birdwatcher.Model.Cameras;
 using UnityEngine;
 
-namespace Birdwatcher.Cameras.Controller {
+namespace Birdwatcher.Controller.Cameras {
 
     public class BinocularsController : CameraController {
 

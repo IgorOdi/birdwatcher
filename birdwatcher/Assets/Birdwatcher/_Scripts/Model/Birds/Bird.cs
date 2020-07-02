@@ -1,4 +1,4 @@
-﻿namespace Birdwatcher.Birds.Model {
+﻿namespace Birdwatcher.Model.Birds {
 
     public class Bird {
 

@@ -1,4 +1,4 @@
-﻿namespace Birdwatcher.Cameras.Model {
+﻿namespace Birdwatcher.Model.Cameras {
 
     public class Binoculars {
 
