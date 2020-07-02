@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Birdwatcher.Model.Birds;
+using Birdwatcher.Birds.Model;
 using UnityEngine;
 
 namespace Birdwatcher.Procedural.Database {

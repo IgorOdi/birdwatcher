@@ -1,4 +1,4 @@
-using Birdwatcher.Model.Birds;
+using Birdwatcher.Birds.Model;
 using UnityEngine;
 
 namespace Birdwatcher.Procedural.Database
