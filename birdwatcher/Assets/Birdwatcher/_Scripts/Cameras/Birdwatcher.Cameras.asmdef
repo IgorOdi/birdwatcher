@@ -1,14 +1,15 @@
 {
-    "name": "Birdwatcher.Procedural",
+    "name": "Birdwatcher.Cameras",
     "references": [
-        "GUID:0f89757f46159d84f8dece7641713b5d"
+        "GUID:15b5531383077c848bf6a5b1e798c847",
+        "GUID:4307f53044263cf4b835bd812fc161a4"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": true,
+    "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": false,
+    "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

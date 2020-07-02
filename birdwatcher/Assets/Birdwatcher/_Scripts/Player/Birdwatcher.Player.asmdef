@@ -1,7 +1,7 @@
 {
-    "name": "Birdwatcher.Procedural",
+    "name": "Birdwatcher.Player",
     "references": [
-        "GUID:0f89757f46159d84f8dece7641713b5d"
+        "GUID:15b5531383077c848bf6a5b1e798c847"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
