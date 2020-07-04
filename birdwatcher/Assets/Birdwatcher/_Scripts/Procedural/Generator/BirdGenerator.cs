@@ -1,6 +1,6 @@
-﻿using Birdwatcher.Procedural.Database;
+﻿using System;
 using Birdwatcher.Model.Birds;
-using UnityEngine;
+using Birdwatcher.Procedural.Database;
 
 namespace Birdwatcher.Procedural.Generator {
 
@@ -8,26 +8,35 @@ namespace Birdwatcher.Procedural.Generator {
 
         private static int seedRange = 10000;
 
-        public static Bird GenerateBird (int seed) {
+        public static Bird GenerateBird (BirdType birdType, int seed) {
 
-            return InternalGenerate (seed);
+            return InternalGenerate (birdType, seed);
+        }
+
+        public static Bird GenerateBird (BirdType birdType) {
+
+            int seed = UnityEngine.Random.Range (-seedRange, seedRange);
+            return InternalGenerate (birdType, seed);
         }
 
         public static Bird GenerateBird () {
 
-            int seed = Random.Range (-seedRange, seedRange);
-            return InternalGenerate (seed);
+            int seed = UnityEngine.Random.Range (-seedRange, seedRange);
+            BirdType birdType = (BirdType) UnityEngine.Random.Range (0, Enum.GetNames (typeof (BirdType)).Length);
+            return InternalGenerate (birdType, seed);
         }
 
-        private static Bird InternalGenerate (int seed) {
+        private static Bird InternalGenerate (BirdType birdType, int seed) {
 
             System.Random randomizer = new System.Random (seed);
+            var possibilities = Bunker.GetPossibilities (birdType);
+
             return new Bird (
-                (Beak) randomizer.Next (0, BirdBeakDatabase.GetLength ()),
-                (Body) randomizer.Next (0, BirdBodyDatabase.GetLength ()),
-                (Wing) randomizer.Next (0, BirdWingDatabase.GetLength ()),
-                (Legs) randomizer.Next (0, BirdLegsDatabase.GetLength ()),
-                (Tail) randomizer.Next (0, BirdTailDatabase.GetLength ()),
+                (Beak) possibilities.PossibleBeaks[randomizer.Next (0, possibilities.PossibleBeaks.Count)],
+                (Body) possibilities.PossibleBodies[randomizer.Next (0, possibilities.PossibleBodies.Count)],
+                (Wing) possibilities.PossibleWings[randomizer.Next (0, possibilities.PossibleWings.Count)],
+                (Legs) possibilities.PossibleLegs[randomizer.Next (0, possibilities.PossibleLegs.Count)],
+                (Tail) possibilities.PossibleTails[randomizer.Next (0, possibilities.PossibleTails.Count)],
                 seed
             );
         }

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a78369651d8be134393ba51ae61d956d, type: 3}
   m_Name: Beak Database
   m_EditorClassIdentifier: Procedural:Birdwatcher.Procedural.Database:BirdBeakDatabase
+  databaseType: 0
   partList:
   - {fileID: 5437733813081549630, guid: 8a5e824c1b73430478b2db5a08dedda2, type: 3}
   - {fileID: 7952722166454601373, guid: 657bf05649d837b48aff42d0fad1575c, type: 3}

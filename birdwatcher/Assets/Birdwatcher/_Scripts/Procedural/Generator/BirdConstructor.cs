@@ -49,11 +49,11 @@ namespace Birdwatcher.Procedural.Generator {
 
         private void SetDatabases (Bird birdToData) {
 
-            beakDb = Bunker.birdBeakDatabases.GetSpecificType (birdToData.Beak);
-            bodyDb = Bunker.birdBodyDatabases.GetSpecificType (birdToData.Body);
-            wingDb = Bunker.birdWingDatabases.GetSpecificType (birdToData.Wing);
-            legsDb = Bunker.birdLegsDatabases.GetSpecificType (birdToData.Legs);
-            tailDb = Bunker.birdTailDatabases.GetSpecificType (birdToData.Tail);
+            beakDb = Bunker.birdBeakDatabases.GetDatabase (birdToData.Beak);
+            bodyDb = Bunker.birdBodyDatabases.GetDatabase (birdToData.Body);
+            wingDb = Bunker.birdWingDatabases.GetDatabase (birdToData.Wing);
+            legsDb = Bunker.birdLegsDatabases.GetDatabase (birdToData.Legs);
+            tailDb = Bunker.birdTailDatabases.GetDatabase (birdToData.Tail);
         }
     }
 }

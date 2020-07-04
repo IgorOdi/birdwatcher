@@ -1,5 +1,15 @@
 ﻿namespace Birdwatcher.Model.Birds {
 
+    public enum BirdType {
+
+        SKYBIRD,
+        GROUNDBIRD,
+        TREELIVER,
+        SKYFISHER,
+        SWIMMER,
+        WATERSEEKER,
+    }
+
     public enum BirdPart {
 
         BEAK,

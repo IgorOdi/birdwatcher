@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74f04b269d0f7824aa1666d74d9b55e9, type: 3}
   m_Name: Wing Database
   m_EditorClassIdentifier: Procedural:Birdwatcher.Procedural.Database:BirdWingDatabase
+  databaseType: 0
   partList:
   - {fileID: 6144243345513115372, guid: 1584f155aa33a204dbb038d2c70e990b, type: 3}
   - {fileID: 8621794253892686201, guid: c4bf7bd2838040640a4d466fcc351e74, type: 3}

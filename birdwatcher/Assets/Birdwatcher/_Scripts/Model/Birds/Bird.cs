@@ -21,5 +21,9 @@
             this.Tail = tail;
             this.seed = seed;
         }
+
+        public Bird () {
+
+        }
     }
 }
