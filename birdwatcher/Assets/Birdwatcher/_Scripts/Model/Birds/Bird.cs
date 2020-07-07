@@ -1,8 +1,6 @@
 ﻿namespace Birdwatcher.Model.Birds {
 
-    public class Bird {
-
-        public string BirdName { get; private set; }
+    public class Bird : Observable {
 
         public Beak Beak { get; private set; }
         public Body Body { get; private set; }
@@ -20,10 +18,6 @@
             this.Legs = legs;
             this.Tail = tail;
             this.seed = seed;
-        }
-
-        public Bird () {
-
         }
     }
 }

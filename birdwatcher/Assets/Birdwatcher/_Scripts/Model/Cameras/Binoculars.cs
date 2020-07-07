@@ -2,13 +2,14 @@
 
     public class Binoculars {
 
-        public float MinRange { get; set; }
-        public float MaxRange { get; set; }
+        public float MinZoom { get; }
+        public float MaxZoom { get; }
+        public float FocusPoint { get; set; }
 
-        public Binoculars (float minRange, float maxRange) {
+        public Binoculars (float minZoom, float maxZoom) {
 
-            MinRange = minRange;
-            MaxRange = maxRange;
+            MinZoom = minZoom;
+            MaxZoom = maxZoom;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Birdwatcher.Controller.Cameras {
 
         private const float BASE_SENSIBILITY = 3;
 
-        void Start () => Initialize ();
+        private void Start () => Initialize ();
 
         public virtual void Initialize () {
 
@@ -24,7 +24,7 @@ namespace Birdwatcher.Controller.Cameras {
             Cursor.lockState = CursorLockMode.Locked;
         }
 
-        public void SetLookPoint(Transform lookPoint) {
+        public void SetLookPoint (Transform lookPoint) {
 
             virtualCamera.m_Follow = lookPoint;
             virtualCamera.m_LookAt = lookPoint;

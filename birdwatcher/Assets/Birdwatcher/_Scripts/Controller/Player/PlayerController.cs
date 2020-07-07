@@ -31,10 +31,14 @@ namespace Birdwatcher.Controller.Player {
 
         public void Update () {
 
+            if (controller.isGrounded)
+                moveDirection.y = 0f;
+
             velocity = Vector3.forward * InputManager.Instance.GetAxis (KeyAxis.VERTICAL) +
                 Vector3.right * InputManager.Instance.GetAxis (KeyAxis.HORIZONTAL);
             bool speedReduced = velocity.z < 0;
             moveDirection = transform.TransformDirection (velocity.normalized) * playerData.GetSpeed (speedReduced) * Time.deltaTime;
+            moveDirection.y += -9f * Time.deltaTime;
 
             controller.Move (moveDirection);
             transform.eulerAngles += Vector3.up * InputManager.Instance.GetMouseAxis (MouseAxis.X) * 3;
