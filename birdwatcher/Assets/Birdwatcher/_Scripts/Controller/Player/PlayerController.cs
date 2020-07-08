@@ -1,4 +1,5 @@
-﻿using Birdwatcher.Input;
+﻿using Birdwatcher.Global;
+using Birdwatcher.Input;
 using Birdwatcher.Model.Player;
 using UnityEngine;
 
@@ -14,6 +15,8 @@ namespace Birdwatcher.Controller.Player {
         private Vector3 velocity;
         private Vector3 moveDirection;
 
+        private InputManager inputManager;
+
         private int speedParam;
         private int directionParam;
         private const string SPEED_PARAM = "Speed";
@@ -27,6 +30,8 @@ namespace Birdwatcher.Controller.Player {
             animator = GetComponentInChildren<Animator> ();
             speedParam = Animator.StringToHash (SPEED_PARAM);
             directionParam = Animator.StringToHash (DIRECTION_PARAM);
+
+            inputManager = SingletonManager.GetSingleton<InputManager> ();
         }
 
         public void Update () {
@@ -34,14 +39,14 @@ namespace Birdwatcher.Controller.Player {
             if (controller.isGrounded)
                 moveDirection.y = 0f;
 
-            velocity = Vector3.forward * InputManager.Instance.GetAxis (KeyAxis.VERTICAL) +
-                Vector3.right * InputManager.Instance.GetAxis (KeyAxis.HORIZONTAL);
+            velocity = Vector3.forward * inputManager.GetAxis (KeyAxis.VERTICAL) +
+                Vector3.right * inputManager.GetAxis (KeyAxis.HORIZONTAL);
             bool speedReduced = velocity.z < 0;
             moveDirection = transform.TransformDirection (velocity.normalized) * playerData.GetSpeed (speedReduced) * Time.deltaTime;
             moveDirection.y += -9f * Time.deltaTime;
 
             controller.Move (moveDirection);
-            transform.eulerAngles += Vector3.up * InputManager.Instance.GetMouseAxis (MouseAxis.X) * 3;
+            transform.eulerAngles += Vector3.up * inputManager.GetMouseAxis (MouseAxis.X) * 3;
 
             animator.SetFloat (speedParam, velocity.magnitude);
             animator.SetFloat (directionParam, velocity.z);

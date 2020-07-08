@@ -4,6 +4,7 @@ using Birdwatcher.Model.Cameras;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using Birdwatcher.Global;
 
 namespace Birdwatcher.Controller.Cameras {
 
@@ -41,7 +42,7 @@ namespace Birdwatcher.Controller.Cameras {
 
             startPosition = transform.localPosition;
 
-            var binocularsKey = InputManager.Instance.RegisterKey (BINOCULARS_KEY, KeyCode.Mouse1);
+            var binocularsKey = inputManager.RegisterKey (BINOCULARS_KEY, KeyCode.Mouse1);
             binocularsKey.OnKeyDown += PutBinoculars;
             binocularsKey.OnKeyUp += RemoveBinoculars;
         }
@@ -63,7 +64,7 @@ namespace Birdwatcher.Controller.Cameras {
         private void Update () {
 
             if (isUsing) {
-                Zoom (InputManager.Instance.GetMouseAxis (MouseAxis.SCROLL_WHEEL));
+                Zoom (inputManager.GetMouseAxis (MouseAxis.SCROLL_WHEEL));
                 WatchForBirds ();
             }
         }

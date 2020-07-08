@@ -1,8 +1,6 @@
 {
-    "name": "Birdwatcher.Input",
-    "references": [
-        "GUID:1e9f0b331a01f2d4699f7c6710ae7d61"
-    ],
+    "name": "Birdwatcher.Global",
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

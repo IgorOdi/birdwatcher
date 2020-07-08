@@ -1,32 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Birdwatcher.Global;
 using UnityEngine;
 
 namespace Birdwatcher.Input {
 
     public class InputManager : MonoBehaviour {
 
-        public static InputManager Instance {
-            get { return instance; }
-            private set { instance = value; }
-        }
-        private static InputManager instance;
-
         private Dictionary<RegistrableKeys, InputKey> registeredKeys = new Dictionary<RegistrableKeys, InputKey> ();
 
         private static readonly List<string> KEY_AXIS = new List<string> { "Horizontal", "Vertical" };
         private static readonly List<string> MOUSE_AXIS = new List<string> { "Mouse X", "Mouse Y", "Mouse ScrollWheel" };
 
-        void Awake () => InitializeInstance ();
-
-        public void InitializeInstance () {
-
-            if (Instance != null) {
-
-                Destroy (Instance.gameObject);
-            }
-            Instance = this;
-        }
+        void Awake () => this.SubscribeAsSingleton ();
 
         public InputKey RegisterKey (RegistrableKeys keyID, KeyCode keyCode) {
 

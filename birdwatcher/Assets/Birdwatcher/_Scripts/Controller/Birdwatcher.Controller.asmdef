@@ -1,6 +1,7 @@
 {
     "name": "Birdwatcher.Controller",
     "references": [
+        "GUID:1e9f0b331a01f2d4699f7c6710ae7d61",
         "GUID:15b5531383077c848bf6a5b1e798c847",
         "GUID:bf26bee3851c258409a41ad572e30465",
         "GUID:4307f53044263cf4b835bd812fc161a4",
