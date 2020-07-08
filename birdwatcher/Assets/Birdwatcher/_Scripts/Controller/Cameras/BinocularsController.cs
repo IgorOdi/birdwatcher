@@ -4,7 +4,6 @@ using Birdwatcher.Model.Cameras;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using Birdwatcher.Global;
 
 namespace Birdwatcher.Controller.Cameras {
 
@@ -17,8 +16,6 @@ namespace Birdwatcher.Controller.Cameras {
 
         private bool isUsing;
         private float rangeInterval = 0;
-        private Camera mainCamera;
-        private Vector3 startPosition;
         private RaycastHit hit;
 
         private IObservable identifyingBird;
@@ -26,6 +23,7 @@ namespace Birdwatcher.Controller.Cameras {
 
         private const RegistrableKeys BINOCULARS_KEY = RegistrableKeys.KEY_A;
         private const float SENSIBILITY = 0.025f;
+        private const float IDENTIFY_TIME = 2f;
 
         public override void Initialize () {
 
@@ -36,11 +34,8 @@ namespace Birdwatcher.Controller.Cameras {
             volume.profile.TryGet<DepthOfField> (out depthOfField);
             volume.enabled = false;
 
-            mainCamera = Camera.main;
             virtualCamera.m_Lens.FieldOfView = binoculars.MinZoom;
             virtualCamera.enabled = false;
-
-            startPosition = transform.localPosition;
 
             var binocularsKey = inputManager.RegisterKey (BINOCULARS_KEY, KeyCode.Mouse1);
             binocularsKey.OnKeyDown += PutBinoculars;
@@ -83,15 +78,14 @@ namespace Birdwatcher.Controller.Cameras {
         private void WatchForBirds () {
 
             //Store observed birds
-            //if (Physics.Raycast (transform.position, transform.forward, out hit, binoculars.FocusPoint)) {
-            if (Physics.SphereCast (transform.position, 2f, transform.forward, out hit, binoculars.FocusPoint)) {
+            if (Physics.Raycast (transform.position, transform.forward, out hit, binoculars.FocusPoint)) {
+            //if (Physics.SphereCast (transform.position, 2f, transform.forward, out hit, binoculars.FocusPoint)) {
 
                 IObservable observable;
                 if (hit.transform.TryGetComponent<IObservable> (out observable)) {
 
                     if (observable != identifyingBird) {
-                        //Debug.Log ($"Encontrou {observable.GetObservationData().Name}");
-                        Debug.Log ($"Encontrou {observable.GetHashCode()}");
+                        Debug.Log ($"Encontrou {observable.GetObservationData().Name}");
                         identifyingBird = observable;
                         identifyingCoroutine = StartCoroutine (IdentifyBird ());
                     }
@@ -108,15 +102,14 @@ namespace Birdwatcher.Controller.Cameras {
         private IEnumerator IdentifyBird () {
 
             float t = 0;
-            while (t < 1f) {
+            while (t < IDENTIFY_TIME) {
 
                 t += Time.deltaTime;
                 Debug.Log ($"Identificando em {System.Math.Round(1 - t, 1)} segundos");
                 yield return null;
             }
 
-            Debug.Log ($"Identificou {identifyingBird.GetHashCode()}");
-            //Debug.Log ($"Identificou {identifyingBird.GetObservationData().Name}!");
+            Debug.Log ($"Identificou {identifyingBird.GetObservationData().Name}!");
         }
 
         private void CancelIdentifying () {
@@ -129,8 +122,8 @@ namespace Birdwatcher.Controller.Cameras {
 
             if (binoculars == null || !isUsing) return;
             Gizmos.color = Color.cyan;
-            Gizmos.DrawRay (transform.position, transform.position + transform.forward * binoculars.FocusPoint);
-            Gizmos.DrawWireSphere (transform.position + transform.forward * binoculars.FocusPoint, 2f);
+            Gizmos.DrawRay (transform.position, transform.forward * binoculars.FocusPoint);
+            //Gizmos.DrawWireSphere (transform.position + transform.forward * binoculars.FocusPoint, 2f);
         }
     }
 }

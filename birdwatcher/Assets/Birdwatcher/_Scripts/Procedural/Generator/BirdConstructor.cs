@@ -17,6 +17,9 @@ namespace Birdwatcher.Procedural.Generator {
         private const string LEG_SLOT = "LegSlot";
         private const string TAIL_SLOT = "TailSlot";
 
+        [SerializeField]
+        private Material mainMaterial;
+
         public GameObject ConstructBird (Bird bird) {
 
             SetDatabases (bird);
@@ -34,6 +37,15 @@ namespace Birdwatcher.Procedural.Generator {
             CreatePart (wingGO, instantiatedBody.transform.Find (WING_SLOT));
             CreatePart (legsGO, instantiatedBody.transform.Find (LEG_SLOT));
             CreatePart (tailGO, instantiatedBody.transform.Find (TAIL_SLOT));
+
+            var collider = instantiatedBody.AddComponent<SphereCollider> ();
+            collider.radius = 2f;
+
+            instantiatedBody.AddComponent<Controller.Birds.BirdController> ().Bird = bird;
+            foreach (MeshRenderer r in instantiatedBody.GetComponentsInChildren<MeshRenderer> ()) {
+
+                r.material = mainMaterial;
+            }
 
             return instantiatedBody;
         }

@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Birdwatcher.Input {
 
+    [DefaultExecutionOrder(-1)]
     public class InputManager : MonoBehaviour {
 
         private Dictionary<RegistrableKeys, InputKey> registeredKeys = new Dictionary<RegistrableKeys, InputKey> ();
