@@ -1,6 +1,9 @@
 ﻿using System.Collections;
+using Birdwatcher.Global;
 using Birdwatcher.Input;
 using Birdwatcher.Model.Cameras;
+using Birdwatcher.UI;
+using Birdwatcher.Utils;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -20,8 +23,9 @@ namespace Birdwatcher.Controller.Cameras {
 
         private IObservable identifyingBird;
         private Coroutine identifyingCoroutine;
+        private BinocularsUiController uiController;
 
-        private const RegistrableKeys BINOCULARS_KEY = RegistrableKeys.KEY_A;
+        private const BirdKeys BINOCULARS_KEY = BirdKeys.A;
         private const float SENSIBILITY = 0.025f;
         private const float IDENTIFY_TIME = 2f;
 
@@ -40,6 +44,11 @@ namespace Birdwatcher.Controller.Cameras {
             var binocularsKey = inputManager.RegisterKey (BINOCULARS_KEY, KeyCode.Mouse1);
             binocularsKey.OnKeyDown += PutBinoculars;
             binocularsKey.OnKeyUp += RemoveBinoculars;
+
+            SingletonManager.GetSingleton<UIManager> ().LoadUI (new BinocularsUIData (), (controller) => {
+
+                uiController = (BinocularsUiController) controller;
+            });
         }
 
         private void PutBinoculars () {
@@ -54,6 +63,7 @@ namespace Birdwatcher.Controller.Cameras {
             volume.enabled = false;
             virtualCamera.enabled = false;
             isUsing = false;
+            CancelIdentifying ();
         }
 
         private void Update () {
@@ -78,20 +88,14 @@ namespace Birdwatcher.Controller.Cameras {
         private void WatchForBirds () {
 
             //Store observed birds
-            if (Physics.Raycast (transform.position, transform.forward, out hit, binoculars.FocusPoint)) {
-            //if (Physics.SphereCast (transform.position, 2f, transform.forward, out hit, binoculars.FocusPoint)) {
+            IObservable observable;
+            if (Physics.Raycast (transform.position, transform.forward, out hit, binoculars.FocusPoint) &&
+                hit.transform.TryGetComponent<IObservable> (out observable)) {
 
-                IObservable observable;
-                if (hit.transform.TryGetComponent<IObservable> (out observable)) {
-
-                    if (observable != identifyingBird) {
-                        Debug.Log ($"Encontrou {observable.GetObservationData().Name}");
-                        identifyingBird = observable;
-                        identifyingCoroutine = StartCoroutine (IdentifyBird ());
-                    }
-                } else {
-
-                    CancelIdentifying ();
+                if (observable != identifyingBird) {
+                    Debug.Log ($"Encontrou {observable.GetObservationData().Name}");
+                    identifyingBird = observable;
+                    identifyingCoroutine = StartCoroutine (IdentifyBird ());
                 }
             } else {
 
@@ -102,19 +106,26 @@ namespace Birdwatcher.Controller.Cameras {
         private IEnumerator IdentifyBird () {
 
             float t = 0;
+            uiController.SetMainDisplay ("Identificando nova espécie...");
             while (t < IDENTIFY_TIME) {
 
+                uiController.SetProgressBar (t / IDENTIFY_TIME);
+                Debug.Log ($"Identificando nova espécie em {System.Math.Round(IDENTIFY_TIME - t, 1)} segundos");
                 t += Time.deltaTime;
-                Debug.Log ($"Identificando em {System.Math.Round(1 - t, 1)} segundos");
                 yield return null;
             }
 
-            Debug.Log ($"Identificou {identifyingBird.GetObservationData().Name}!");
+            string identifyText = $"Identificou {identifyingBird.GetObservationData().Name}!";
+            uiController.SetMainDisplay (identifyText, resetText : true, resetTime : 2f);
+            this.RunDelayed (2f, () => uiController.ToggleProgressBar (active: false));
+            Debug.Log (identifyText);
         }
 
         private void CancelIdentifying () {
 
             identifyingBird = null;
+            uiController.SetMainDisplay ("");
+            uiController.ToggleProgressBar (active: false);
             if (identifyingCoroutine != null) StopCoroutine (identifyingCoroutine);
         }
 

@@ -10,13 +10,13 @@ namespace Birdwatcher.Controller.Player {
 
         public PlayerData playerData = new PlayerData ();
 
+        private InputManager inputManager;
         private CharacterController controller;
         private Animator animator;
         private Vector3 velocity;
         private Vector3 moveDirection;
 
-        private InputManager inputManager;
-
+        private bool isCrouched;
         private int speedParam;
         private int directionParam;
         private const string SPEED_PARAM = "Speed";
@@ -32,6 +32,15 @@ namespace Birdwatcher.Controller.Player {
             directionParam = Animator.StringToHash (DIRECTION_PARAM);
 
             inputManager = SingletonManager.GetSingleton<InputManager> ();
+            inputManager.RegisterKey (BirdKeys.CROUCH, KeyCode.LeftControl);
+
+            var crouchKey = inputManager.GetKey (BirdKeys.CROUCH);
+            crouchKey.OnKeyDown += () => isCrouched = true;
+            crouchKey.OnKeyUp += () => isCrouched = false;
+
+            inputManager.RegisterKey (BirdKeys.PAUSE, KeyCode.Escape);
+            var pauseKey = inputManager.GetKey (BirdKeys.PAUSE);
+            pauseKey.OnKeyDown += () => SingletonManager.GetSingleton<UI.UIManager> ().LoadUI (new UI.PauseUIData ());
         }
 
         public void Update () {
@@ -41,7 +50,8 @@ namespace Birdwatcher.Controller.Player {
 
             velocity = Vector3.forward * inputManager.GetAxis (KeyAxis.VERTICAL) +
                 Vector3.right * inputManager.GetAxis (KeyAxis.HORIZONTAL);
-            bool speedReduced = velocity.z < 0;
+
+            bool speedReduced = velocity.z < 0 || isCrouched;
             moveDirection = transform.TransformDirection (velocity.normalized) * playerData.GetSpeed (speedReduced) * Time.deltaTime;
             moveDirection.y += -9f * Time.deltaTime;
 

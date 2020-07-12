@@ -1,9 +1,11 @@
 ﻿namespace Birdwatcher.Input {
 
-    public enum RegistrableKeys {
+    public enum BirdKeys {
 
-        KEY_A,
-        KEY_B,
+        A,
+        B,
+        CROUCH,
+        PAUSE,
         CONFIRM,
         CANCEL,
     }

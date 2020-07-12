@@ -8,14 +8,14 @@ namespace Birdwatcher.Input {
     [DefaultExecutionOrder(-1)]
     public class InputManager : MonoBehaviour {
 
-        private Dictionary<RegistrableKeys, InputKey> registeredKeys = new Dictionary<RegistrableKeys, InputKey> ();
+        private Dictionary<BirdKeys, InputKey> registeredKeys = new Dictionary<BirdKeys, InputKey> ();
 
         private static readonly List<string> KEY_AXIS = new List<string> { "Horizontal", "Vertical" };
         private static readonly List<string> MOUSE_AXIS = new List<string> { "Mouse X", "Mouse Y", "Mouse ScrollWheel" };
 
         void Awake () => this.SubscribeAsSingleton ();
 
-        public InputKey RegisterKey (RegistrableKeys keyID, KeyCode keyCode) {
+        public InputKey RegisterKey (BirdKeys keyID, KeyCode keyCode) {
 
             if (registeredKeys.ContainsKey (keyID))
                 throw new System.Exception ("Key já registrada");
@@ -25,14 +25,14 @@ namespace Birdwatcher.Input {
             return newKey;
         }
 
-        public void UnregisterKey (RegistrableKeys keyID) {
+        public void UnregisterKey (BirdKeys keyID) {
 
             registeredKeys.Remove (keyID);
         }
 
-        public InputKey GetKey (RegistrableKeys keyID) {
+        public InputKey GetKey (BirdKeys keyID) {
 
-            return registeredKeys.Where (x => x.Value.Equals (keyID)).FirstOrDefault ().Value;
+            return registeredKeys[keyID];
         }
 
         public float GetAxis (KeyAxis axis, bool raw = true) {
@@ -52,7 +52,7 @@ namespace Birdwatcher.Input {
 
         private void Update () {
 
-            foreach (KeyValuePair<RegistrableKeys, InputKey> pair in registeredKeys) {
+            foreach (KeyValuePair<BirdKeys, InputKey> pair in registeredKeys) {
 
                 if (UnityEngine.Input.GetKeyDown (pair.Value.KeyCode))
                     pair.Value.KeyDown ();
