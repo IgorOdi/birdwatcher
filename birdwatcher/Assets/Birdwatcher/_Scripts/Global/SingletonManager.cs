@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Birdwatcher.Utils;
 using UnityEngine;
 
 namespace Birdwatcher.Global {
@@ -17,13 +18,13 @@ namespace Birdwatcher.Global {
                     throw new System.Exception ($"Class {singletonType} alread registered");
                 } else {
                     singletonList[singletonType] = singleton;
-                    Debug.Log ($"Subscribed {singleton} as a {singletonType} singleton overriding an old object");
+                    Log.V ($"Subscribed {singleton} as a {singletonType} singleton overriding an old object");
                     return;
                 }
             }
 
             singletonList.Add (singletonType, singleton);
-            Debug.Log ($"Subscribed {singleton} as a singleton");
+            Log.V ($"Subscribed {singleton} as a singleton");
         }
 
         public static void UnsubscribeSingleton (this object singleton) {

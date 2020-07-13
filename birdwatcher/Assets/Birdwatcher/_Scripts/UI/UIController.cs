@@ -1,4 +1,5 @@
 ﻿using Birdwatcher.Global;
+using Birdwatcher.Utils;
 using UnityEngine;
 
 namespace Birdwatcher.UI {
@@ -17,13 +18,13 @@ namespace Birdwatcher.UI {
 
             IsLoaded = true;
             uiManager = SingletonManager.GetSingleton<UIManager> ();
-            Debug.Log ($"Loaded {this.GetType().Name}");
+            Log.V ($"Loaded {this.GetType().Name}");
         }
 
         public virtual void OnUnload () {
 
             IsLoaded = false;
-            Debug.Log ($"Unloaded {this.GetType().Name}");
+            Log.V ($"Unloaded {this.GetType().Name}");
         }
     }
 }

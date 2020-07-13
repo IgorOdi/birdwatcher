@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Birdwatcher.Utils;
+using UnityEngine;
 
 namespace Birdwatcher.Global {
 
@@ -18,12 +19,12 @@ namespace Birdwatcher.Global {
 
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
-                Debug.Log ("Locked Mouse");
+                Log.V ("Locked Mouse");
             } else {
 
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
-                Debug.Log ("Unlocked Mouse");
+                Log.V ("Unlocked Mouse");
             }
         }
     }

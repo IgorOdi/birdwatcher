@@ -92,7 +92,6 @@ namespace Birdwatcher.Controller.Cameras {
 
         private void WatchForBirds () {
 
-            //Store observed birds
             IObservable observable;
             if (Physics.Raycast (transform.position, transform.forward, out hit, binoculars.FocusPoint) &&
                 hit.transform.TryGetComponent<IObservable> (out observable)) {
@@ -105,10 +104,10 @@ namespace Birdwatcher.Controller.Cameras {
 
                         string identifyText = $"Espécie {birdData.Name} já catalogada";
                         uiController.SetMainDisplay (identifyText);
-                        Debug.Log (identifyText);
+                        Log.V (identifyText);
                     } else {
 
-                        Debug.Log ($"Encontrou {birdData.Name}");
+                        Log.V ($"Encontrou {birdData.Name}");
                         identifyingCoroutine = StartCoroutine (IdentifyBird ());
                     }
                 }
@@ -120,12 +119,13 @@ namespace Birdwatcher.Controller.Cameras {
 
         private IEnumerator IdentifyBird () {
 
-            float t = 0;
             uiController.SetMainDisplay ("Identificando nova espécie...");
+            Log.V ($"Identificando nova espécie em {IDENTIFY_TIME} segundos");
+            
+            float t = 0;
             while (t < IDENTIFY_TIME) {
 
                 uiController.SetProgressBar (t / IDENTIFY_TIME);
-                Debug.Log ($"Identificando nova espécie em {System.Math.Round(IDENTIFY_TIME - t, 1)} segundos");
                 t += Time.deltaTime;
                 yield return null;
             }
@@ -134,7 +134,7 @@ namespace Birdwatcher.Controller.Cameras {
             string identifyText = $"Identificou {identifyingBird.GetObservationData().Name}!";
             uiController.SetMainDisplay (identifyText, resetText : true, resetTime : 2f);
             this.RunDelayed (2f, () => uiController.ToggleProgressBar (active: false));
-            Debug.Log (identifyText);
+            Log.V (identifyText);
         }
 
         private void CancelIdentifying () {

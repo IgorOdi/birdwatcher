@@ -2,6 +2,7 @@
 using Birdwatcher.Model.Birds;
 using Birdwatcher.Procedural.Database;
 using Birdwatcher.Procedural.Generator;
+using Birdwatcher.Utils;
 using UnityEngine;
 
 public class ProceduralTests : MonoBehaviour {
@@ -16,7 +17,7 @@ public class ProceduralTests : MonoBehaviour {
 
         Bunker.LoadPossibilities ();
         Bird bird = BirdGenerator.GenerateBird (birdType, seed);
-        Debug.Log ($"{bird.Beak}, {bird.Body}, {bird.Wing}, {bird.Legs}, {bird.Tail}");
+        Log.V ($"{bird.Beak}, {bird.Body}, {bird.Wing}, {bird.Legs}, {bird.Tail}");
     }
 
     [ContextMenu ("Construct Bird")]
@@ -31,7 +32,7 @@ public class ProceduralTests : MonoBehaviour {
     void TestPossibilities () {
 
         var possibilities = DatabaseLoader.LoadPossibilities (BirdType.SKYBIRD);
-        Debug.Log (possibilities.PossibleBeaks[0]);
+        Log.V (possibilities.PossibleBeaks[0]);
     }
 
     void Awake () => SpawnTestBirds ();
