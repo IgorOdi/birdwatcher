@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace Birdwatcher.Input {
 
-    [DefaultExecutionOrder(-1)]
     public class InputManager : MonoBehaviour {
 
         private Dictionary<BirdKeys, InputKey> registeredKeys = new Dictionary<BirdKeys, InputKey> ();
@@ -13,7 +12,7 @@ namespace Birdwatcher.Input {
         private static readonly List<string> KEY_AXIS = new List<string> { "Horizontal", "Vertical" };
         private static readonly List<string> MOUSE_AXIS = new List<string> { "Mouse X", "Mouse Y", "Mouse ScrollWheel" };
 
-        void Awake () => this.SubscribeAsSingleton ();
+        public void Initialize () => this.SubscribeAsSingleton ();
 
         public InputKey RegisterKey (BirdKeys keyID, KeyCode keyCode) {
 

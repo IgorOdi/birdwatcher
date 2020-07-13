@@ -9,15 +9,17 @@ namespace Birdwatcher.Global {
         [RuntimeInitializeOnLoadMethod (RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void OnStartGame () {
 
-            Instantiate<InputManager> ();
-            Instantiate<UIManager> ();
+            Instantiate<InputManager> ().Initialize ();
+            Instantiate<UIManager> ().Initialize ();
+            Instantiate<GameManager> ().Initialize ();
         }
 
-        private static void Instantiate<T> () where T : Component {
+        private static T Instantiate<T> () where T : Component {
 
             GameObject g = new GameObject (typeof (T).Name);
-            g.AddComponent<T> ();
+            var component = g.AddComponent<T> ();
             DontDestroyOnLoad (g);
+            return component;
         }
     }
 }

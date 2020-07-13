@@ -1,6 +1,8 @@
 ﻿using System.Collections;
+using System.Linq;
 using Birdwatcher.Global;
 using Birdwatcher.Input;
+using Birdwatcher.Model.Birds;
 using Birdwatcher.Model.Cameras;
 using Birdwatcher.UI;
 using Birdwatcher.Utils;
@@ -23,7 +25,9 @@ namespace Birdwatcher.Controller.Cameras {
 
         private IObservable identifyingBird;
         private Coroutine identifyingCoroutine;
-        private BinocularsUiController uiController;
+        private BinocularsUIController uiController;
+        private BinocularsUIData binocularsUIData = new BinocularsUIData ();
+        private GameSession gameSession;
 
         private const BirdKeys BINOCULARS_KEY = BirdKeys.A;
         private const float SENSIBILITY = 0.025f;
@@ -45,9 +49,10 @@ namespace Birdwatcher.Controller.Cameras {
             binocularsKey.OnKeyDown += PutBinoculars;
             binocularsKey.OnKeyUp += RemoveBinoculars;
 
-            SingletonManager.GetSingleton<UIManager> ().LoadUI (new BinocularsUIData (), (controller) => {
+            gameSession = SingletonManager.GetSingleton<GameManager> ().CurrentGameSession;
+            SingletonManager.GetSingleton<UIManager> ().LoadUI (binocularsUIData, (controller) => {
 
-                uiController = (BinocularsUiController) controller;
+                uiController = (BinocularsUIController) controller;
             });
         }
 
@@ -93,9 +98,19 @@ namespace Birdwatcher.Controller.Cameras {
                 hit.transform.TryGetComponent<IObservable> (out observable)) {
 
                 if (observable != identifyingBird) {
-                    Debug.Log ($"Encontrou {observable.GetObservationData().Name}");
+
                     identifyingBird = observable;
-                    identifyingCoroutine = StartCoroutine (IdentifyBird ());
+                    var birdData = identifyingBird.GetObservationData ();
+                    if (gameSession.IdentifiedSpecies.Any (bird => bird.GetObservationData ().Equals (birdData))) {
+
+                        string identifyText = $"Espécie {birdData.Name} já catalogada";
+                        uiController.SetMainDisplay (identifyText);
+                        Debug.Log (identifyText);
+                    } else {
+
+                        Debug.Log ($"Encontrou {birdData.Name}");
+                        identifyingCoroutine = StartCoroutine (IdentifyBird ());
+                    }
                 }
             } else {
 
@@ -115,6 +130,7 @@ namespace Birdwatcher.Controller.Cameras {
                 yield return null;
             }
 
+            gameSession.IdentifiedSpecies.Add (identifyingBird);
             string identifyText = $"Identificou {identifyingBird.GetObservationData().Name}!";
             uiController.SetMainDisplay (identifyText, resetText : true, resetTime : 2f);
             this.RunDelayed (2f, () => uiController.ToggleProgressBar (active: false));

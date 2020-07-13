@@ -7,14 +7,16 @@ using UnityEngine.SceneManagement;
 
 namespace Birdwatcher.UI {
 
-    [DefaultExecutionOrder(-1)]
     public class UIManager : MonoBehaviour {
 
         private Dictionary<UIData, UIController> uiList = new Dictionary<UIData, UIController> ();
 
-        void Awake () => this.SubscribeAsSingleton ();
+        public void Initialize () => this.SubscribeAsSingleton ();
 
         public void LoadUI (UIData uiData, Action<UIController> callback = null) {
+
+            if (uiList.Keys.Where (u => u.SceneName == uiData.SceneName).FirstOrDefault () != null)
+                throw new Exception ("This Ui is already loaded");
 
             SceneManager.LoadSceneAsync (uiData.SceneName, LoadSceneMode.Additive).completed += (operation) => {
 
@@ -23,6 +25,7 @@ namespace Birdwatcher.UI {
 
                     if (g.TryGetComponent<UIController> (out UIController controller)) {
 
+                        controller.OnLoad ();
                         callback?.Invoke (controller);
                         uiList.Add (uiData, controller);
                         return;
@@ -33,17 +36,16 @@ namespace Birdwatcher.UI {
             };
         }
 
-        public UIController GetUIController<T> () {
-
-            return uiList.Values.Where (ui => ui.GetType () == typeof (T)).First ();
-        }
-
         public void UnloadUI (UIData uiData, Action callback = null) {
 
-            SceneManager.UnloadSceneAsync (uiData.SceneName, UnloadSceneOptions.None).completed += (operation) => {
+            GetUIController (uiData).OnUnload ();
+            InternalUnload (uiData, callback);
+        }
 
-                callback?.Invoke ();
-            };
+        public void UnloadUI (UIController uiController, Action callback = null) {
+
+            uiController.OnUnload ();
+            InternalUnload (GetUIDataFromController (uiController), callback);
         }
 
         public void UnloadAll () {
@@ -52,6 +54,25 @@ namespace Birdwatcher.UI {
 
                 UnloadUI (ui);
             }
+        }
+
+        private void InternalUnload (UIData uiData, Action callback = null) {
+
+            SceneManager.UnloadSceneAsync (uiData.SceneName, UnloadSceneOptions.None).completed += (operation) => {
+
+                callback?.Invoke ();
+                uiList.Remove (uiData);
+            };
+        }
+
+        private UIController GetUIController (UIData uiData) {
+
+            return uiList[uiData];
+        }
+
+        private UIData GetUIDataFromController (UIController uiController) {
+
+            return uiList.Where (ui => ui.Value == uiController).First ().Key;
         }
     }
 }

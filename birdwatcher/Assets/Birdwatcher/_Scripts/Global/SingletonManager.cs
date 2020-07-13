@@ -23,7 +23,7 @@ namespace Birdwatcher.Global {
             }
 
             singletonList.Add (singletonType, singleton);
-            Debug.Log ($"Subscribed {singleton} as a {singletonType} singleton");
+            Debug.Log ($"Subscribed {singleton} as a singleton");
         }
 
         public static void UnsubscribeSingleton (this object singleton) {

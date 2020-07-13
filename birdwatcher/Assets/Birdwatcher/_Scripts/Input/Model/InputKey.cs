@@ -36,7 +36,7 @@ namespace Birdwatcher.Input {
 
         public void KeyHold () {
 
-            OnKeyDown?.Invoke ();
+            OnKeyHold?.Invoke ();
         }
     }
 }

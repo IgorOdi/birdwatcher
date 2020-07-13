@@ -32,6 +32,7 @@ namespace Birdwatcher.Procedural.Generator {
             var possibilities = Bunker.GetPossibilities (birdType);
 
             return new Bird (
+                birdType,
                 (Beak) possibilities.PossibleBeaks[randomizer.Next (0, possibilities.PossibleBeaks.Count)],
                 (Body) possibilities.PossibleBodies[randomizer.Next (0, possibilities.PossibleBodies.Count)],
                 (Wing) possibilities.PossibleWings[randomizer.Next (0, possibilities.PossibleWings.Count)],

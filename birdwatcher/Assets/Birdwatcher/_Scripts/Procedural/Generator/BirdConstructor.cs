@@ -24,7 +24,7 @@ namespace Birdwatcher.Procedural.Generator {
 
             SetDatabases (bird);
 
-            System.Random random = new System.Random (bird.seed);
+            System.Random random = new System.Random (bird.Seed);
 
             var beakGO = beakDb.GetRandomPart (random.Next ());
             var bodyGO = bodyDb.GetRandomPart (random.Next ());

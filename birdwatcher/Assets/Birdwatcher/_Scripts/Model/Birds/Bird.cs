@@ -2,22 +2,30 @@
 
     public class Bird : Observable {
 
-        public Beak Beak { get; private set; }
-        public Body Body { get; private set; }
-        public Wing Wing { get; private set; }
-        public Legs Legs { get; private set; }
-        public Tail Tail { get; private set; }
+        public readonly BirdType BirdType;
 
-        public int seed { get; private set; }
+        public readonly Beak Beak;
+        public readonly Body Body;
+        public readonly Wing Wing;
+        public readonly Legs Legs;
+        public readonly Tail Tail;
 
-        public Bird (Beak beak, Body body, Wing wing, Legs legs, Tail tail, int seed) {
+        public readonly int Seed;
+
+        public Bird (BirdType birdType, Beak beak, Body body, Wing wing, Legs legs, Tail tail, int seed) {
+
+            this.Name = seed.ToString ();
+
+            this.BirdType = birdType;
+            this.Type = BirdType.ToString ();
 
             this.Beak = beak;
             this.Body = body;
             this.Wing = wing;
             this.Legs = legs;
             this.Tail = tail;
-            this.seed = seed;
+
+            this.Seed = seed;
         }
     }
 }

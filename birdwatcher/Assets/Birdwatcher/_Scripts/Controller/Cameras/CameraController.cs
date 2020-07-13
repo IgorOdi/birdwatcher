@@ -22,9 +22,7 @@ namespace Birdwatcher.Controller.Cameras {
             inputManager = SingletonManager.GetSingleton<InputManager> ();
             virtualCamera = GetComponent<CinemachineVirtualCamera> ();
 
-            //Cursor
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
+            SingletonManager.GetSingleton<GameManager> ().ToggleCursor (locked: true);
         }
 
         public void SetLookPoint (Transform lookPoint) {

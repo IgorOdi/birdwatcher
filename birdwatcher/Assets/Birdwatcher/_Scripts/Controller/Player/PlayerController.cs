@@ -37,10 +37,6 @@ namespace Birdwatcher.Controller.Player {
             var crouchKey = inputManager.GetKey (BirdKeys.CROUCH);
             crouchKey.OnKeyDown += () => isCrouched = true;
             crouchKey.OnKeyUp += () => isCrouched = false;
-
-            inputManager.RegisterKey (BirdKeys.PAUSE, KeyCode.Escape);
-            var pauseKey = inputManager.GetKey (BirdKeys.PAUSE);
-            pauseKey.OnKeyDown += () => SingletonManager.GetSingleton<UI.UIManager> ().LoadUI (new UI.PauseUIData ());
         }
 
         public void Update () {

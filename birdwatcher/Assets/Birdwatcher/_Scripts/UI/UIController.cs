@@ -10,14 +10,20 @@ namespace Birdwatcher.UI {
 
     public abstract class UIController : MonoBehaviour {
 
+        public bool IsLoaded { get; private set; }
         protected UIManager uiManager;
-        protected bool isLoaded;
 
-        void Awake () => Initialize ();
+        public virtual void OnLoad () {
 
-        protected virtual void Initialize () {
-
+            IsLoaded = true;
             uiManager = SingletonManager.GetSingleton<UIManager> ();
+            Debug.Log ($"Loaded {this.GetType().Name}");
+        }
+
+        public virtual void OnUnload () {
+
+            IsLoaded = false;
+            Debug.Log ($"Unloaded {this.GetType().Name}");
         }
     }
 }

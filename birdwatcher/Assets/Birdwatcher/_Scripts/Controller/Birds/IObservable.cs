@@ -1,6 +1,9 @@
-﻿using Birdwatcher.Model.Birds;
+﻿using System.Collections.Generic;
 
-public interface IObservable {
+namespace Birdwatcher.Model.Birds {
 
-    Observable GetObservationData ();
+    public interface IObservable {
+
+        Observable GetObservationData ();
+    }
 }

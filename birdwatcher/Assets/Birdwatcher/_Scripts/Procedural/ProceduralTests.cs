@@ -23,7 +23,7 @@ public class ProceduralTests : MonoBehaviour {
     void Generate () {
 
         Bunker.LoadDatabases ();
-        Bird bird = new Bird (Beak.GENERALIST, Body.MEDIUM, Wing.FAST, Legs.GENERIC, Tail.BASIC, seed);
+        Bird bird = new Bird (BirdType.GROUNDBIRD, Beak.GENERALIST, Body.MEDIUM, Wing.FAST, Legs.GENERIC, Tail.BASIC, seed);
         FindObjectOfType<BirdConstructor> ().ConstructBird (bird);
     }
 
@@ -42,8 +42,7 @@ public class ProceduralTests : MonoBehaviour {
         List<Bird> birdList = new List<Bird> ();
         for (int i = 0; i <= 5435; i += 5435) {
 
-            birdList.Add (new Bird (Beak.GENERALIST, Body.MEDIUM, Wing.FAST, Legs.GENERIC, Tail.BASIC, i));
-            birdList[i == 0 ? 0 : 1].Name = i.ToString ();
+            birdList.Add (new Bird (BirdType.GROUNDBIRD, Beak.GENERALIST, Body.MEDIUM, Wing.FAST, Legs.GENERIC, Tail.BASIC, i));
         }
 
         int birdAmount = Random.Range (4, 12);

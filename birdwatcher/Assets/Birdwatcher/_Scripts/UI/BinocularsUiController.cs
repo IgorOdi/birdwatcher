@@ -10,7 +10,7 @@ namespace Birdwatcher.UI {
         public override string SceneName { get { return "BinocularsUI"; } }
     }
 
-    public class BinocularsUiController : UIController {
+    public class BinocularsUIController : UIController {
 
         [SerializeField]
         private TextMeshProUGUI mainText;
@@ -22,11 +22,11 @@ namespace Birdwatcher.UI {
 
         private const float BASE_RESET_TIME = 3f;
 
-        protected override void Initialize () {
+        public override void OnLoad () {
 
-            base.Initialize ();
+            base.OnLoad ();
             ToggleProgressBar (active: false);
-            SetProgressBar (0);
+            SetProgressBar (0, false);
         }
 
         public void SetMainDisplay (string text, bool resetText = false, float resetTime = BASE_RESET_TIME) {
@@ -38,9 +38,9 @@ namespace Birdwatcher.UI {
             }
         }
 
-        public void SetProgressBar (float percent) {
+        public void SetProgressBar (float percent, bool shouldActive = true) {
 
-            if (!progressGameObject.activeSelf) ToggleProgressBar (true);
+            if (!progressGameObject.activeSelf && shouldActive) ToggleProgressBar (true);
             progressBar.fillAmount = percent;
         }
 
