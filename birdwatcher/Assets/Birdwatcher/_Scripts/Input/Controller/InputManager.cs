@@ -16,11 +16,8 @@ namespace Birdwatcher.Input {
 
         public InputKey RegisterKey (BirdKeys keyID, KeyCode keyCode) {
 
-            if (registeredKeys.ContainsKey (keyID))
-                throw new System.Exception ("Key já registrada");
-
             var newKey = new InputKey (keyCode);
-            registeredKeys.Add (keyID, newKey);
+            registeredKeys[keyID] = newKey;
             return newKey;
         }
 

@@ -16,7 +16,7 @@ namespace Birdwatcher.UI {
         public void LoadUI (UIData uiData, Action<UIController> callback = null) {
 
             if (uiList.Keys.Where (u => u.SceneName == uiData.SceneName).FirstOrDefault () != null)
-                throw new Exception ("This Ui is already loaded");
+                throw new Exception ("This UI is already loaded");
 
             SceneManager.LoadSceneAsync (uiData.SceneName, LoadSceneMode.Additive).completed += (operation) => {
 
