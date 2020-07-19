@@ -18,8 +18,8 @@ namespace Birdwatcher.Utils {
         public static void InternalVerbose (object message, Color color) {
 
             StackTrace stackTrace = new StackTrace ();
-            var classCaller = stackTrace.GetFrame (1).GetMethod ().DeclaringType.Name;
-            var methodCaller = stackTrace.GetFrame (1).GetMethod ().Name;
+            var classCaller = stackTrace.GetFrame (2).GetMethod ().DeclaringType.Name;
+            var methodCaller = stackTrace.GetFrame (2).GetMethod ().Name;
 
             string colorString = ColorUtility.ToHtmlStringRGBA (color);
 
