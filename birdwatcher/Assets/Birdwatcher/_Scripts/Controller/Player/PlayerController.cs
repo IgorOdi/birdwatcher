@@ -1,13 +1,13 @@
 ﻿using Birdwatcher.Global;
 using Birdwatcher.Input;
 using Birdwatcher.Model.Player;
-using UnityEngine;
 using Birdwatcher.Utils;
+using UnityEngine;
 
 namespace Birdwatcher.Controller.Player {
 
     [RequireComponent (typeof (CharacterController))]
-    public class PlayerController : MonoBehaviour {
+    public class PlayerController : MonoBehaviour, IPausable {
 
         public PlayerData playerData = new PlayerData ();
 
@@ -20,6 +20,10 @@ namespace Birdwatcher.Controller.Player {
         private bool isCrouched;
         private int speedParam;
         private int directionParam;
+
+        private float playerTurnSensibility = BASE_SENSIBILITY;
+        private const float BASE_SENSIBILITY = 3;
+
         private const string SPEED_PARAM = "Speed";
         private const string DIRECTION_PARAM = "Direction";
 
@@ -33,11 +37,13 @@ namespace Birdwatcher.Controller.Player {
             directionParam = Animator.StringToHash (DIRECTION_PARAM);
 
             inputManager = SingletonManager.GetSingleton<InputManager> ();
-            inputManager.RegisterKey (BirdKeys.CROUCH, KeyCode.LeftControl);
 
             var crouchKey = inputManager.GetKey (BirdKeys.CROUCH);
             crouchKey.OnKeyDown += () => isCrouched = true;
             crouchKey.OnKeyUp += () => isCrouched = false;
+
+            playerTurnSensibility = BASE_SENSIBILITY;
+            this.RegisterPausable ();
         }
 
         public void Update () {
@@ -53,10 +59,18 @@ namespace Birdwatcher.Controller.Player {
             moveDirection.y += -9f * Time.deltaTime;
 
             controller.Move (moveDirection);
-            transform.eulerAngles += Vector3.up * inputManager.GetMouseAxis (MouseAxis.X) * 3;
+            transform.eulerAngles += Vector3.up * inputManager.GetMouseAxis (MouseAxis.X) * playerTurnSensibility;
 
             animator.SetFloat (speedParam, velocity.magnitude);
             animator.SetFloat (directionParam, velocity.z);
+        }
+
+        public void OnPause () {
+            playerTurnSensibility = 0;
+        }
+
+        public void OnUnpause () {
+            playerTurnSensibility = BASE_SENSIBILITY;
         }
     }
 }

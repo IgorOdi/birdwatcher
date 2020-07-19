@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Birdwatcher.Controller.Cameras {
 
-    public class CameraController : MonoBehaviour {
+    public class CameraController : MonoBehaviour, IPausable {
 
         protected InputManager inputManager;
         protected CinemachineVirtualCamera virtualCamera;
@@ -13,6 +13,7 @@ namespace Birdwatcher.Controller.Cameras {
         private float mouseVerticalLook;
         private float mouseHorizontalLook;
 
+        private float sensibility = BASE_SENSIBILITY;
         private const float BASE_SENSIBILITY = 3;
 
         private void Awake () => Initialize ();
@@ -23,6 +24,9 @@ namespace Birdwatcher.Controller.Cameras {
             virtualCamera = GetComponent<CinemachineVirtualCamera> ();
 
             SingletonManager.GetSingleton<GameManager> ().ToggleCursor (locked: true);
+            this.RegisterPausable ();
+
+            sensibility = BASE_SENSIBILITY;
         }
 
         public void SetLookPoint (Transform lookPoint) {
@@ -33,11 +37,19 @@ namespace Birdwatcher.Controller.Cameras {
 
         private void LateUpdate () {
 
-            mouseVerticalLook += inputManager.GetMouseAxis (MouseAxis.Y) * BASE_SENSIBILITY;
+            mouseVerticalLook += inputManager.GetMouseAxis (MouseAxis.Y) * sensibility;
             mouseVerticalLook = Mathf.Clamp (mouseVerticalLook, -80, 40);
 
-            mouseHorizontalLook += inputManager.GetMouseAxis (MouseAxis.X) * BASE_SENSIBILITY;
+            mouseHorizontalLook += inputManager.GetMouseAxis (MouseAxis.X) * sensibility;
             transform.eulerAngles = Vector3.up * mouseHorizontalLook + Vector3.left * mouseVerticalLook;
+        }
+
+        public void OnPause () {
+            sensibility = 0;
+        }
+
+        public void OnUnpause () {
+            sensibility = BASE_SENSIBILITY;
         }
     }
 }

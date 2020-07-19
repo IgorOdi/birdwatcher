@@ -41,16 +41,15 @@ public class ProceduralTests : MonoBehaviour {
         Bunker.LoadPossibilities ();
         Bunker.LoadDatabases ();
         List<Bird> birdList = new List<Bird> ();
-        for (int i = 0; i <= 5435; i += 5435) {
+        for (int i = 0; i <= 7; i++) {
 
             birdList.Add (new Bird (BirdType.GROUNDBIRD, Beak.GENERALIST, Body.MEDIUM, Wing.FAST, Legs.GENERIC, Tail.BASIC, i));
         }
 
-        int birdAmount = Random.Range (4, 12);
-        for (int i = 0; i < birdAmount; i++) {
+        //int birdAmount = Random.Range (14, 14*2);
+        for (int i = 0; i < 7; i++) {
 
-            int birdIndex = i % 2 == 0 ? 0 : 1;
-            var spawnedBird = FindObjectOfType<BirdConstructor> ().ConstructBird (birdList[birdIndex]);
+            var spawnedBird = FindObjectOfType<BirdConstructor> ().ConstructBird (birdList[i]);
             spawnedBird.transform.position = new Vector3 (Random.Range (-100, 100), Random.Range (1, 12), Random.Range (-100, 100));
         }
     }

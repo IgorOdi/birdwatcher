@@ -1,4 +1,5 @@
-﻿using Birdwatcher.Utils;
+﻿using Birdwatcher.Input;
+using Birdwatcher.Utils;
 using UnityEngine;
 
 namespace Birdwatcher.Global {
@@ -10,6 +11,13 @@ namespace Birdwatcher.Global {
         public void Initialize () {
 
             this.SubscribeAsSingleton ();
+            var inputManager = SingletonManager.GetSingleton<InputManager> ();
+
+            //Fix for out of gameplay
+            inputManager.RegisterKey (BirdKeys.BINOCULARS, KeyCode.Mouse1);
+            inputManager.RegisterKey (BirdKeys.CROUCH, KeyCode.LeftControl);
+            inputManager.RegisterKey (BirdKeys.PAUSE, KeyCode.Tab);
+
             CurrentGameSession = new GameSession ();
         }
 

@@ -14,11 +14,6 @@ namespace Birdwatcher.Input {
 
         public InputKey (KeyCode keyCode) {
 
-            ChangeKeyCode (keyCode);
-        }
-
-        public void ChangeKeyCode (KeyCode keyCode) {
-
             this.KeyCode = keyCode;
         }
 
@@ -36,6 +31,7 @@ namespace Birdwatcher.Input {
 
         public void KeyHold () {
 
+            KeyValue = 1;
             OnKeyHold?.Invoke ();
         }
     }

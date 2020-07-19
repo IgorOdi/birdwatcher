@@ -29,7 +29,6 @@ namespace Birdwatcher.Controller.Cameras {
         private BinocularsUIData binocularsUIData = new BinocularsUIData ();
         private GameSession gameSession;
 
-        private const BirdKeys BINOCULARS_KEY = BirdKeys.A;
         private const float SENSIBILITY = 0.025f;
         private const float IDENTIFY_TIME = 2f;
 
@@ -45,7 +44,7 @@ namespace Birdwatcher.Controller.Cameras {
             virtualCamera.m_Lens.FieldOfView = binoculars.MinZoom;
             virtualCamera.enabled = false;
 
-            var binocularsKey = inputManager.RegisterKey (BINOCULARS_KEY, KeyCode.Mouse1);
+            var binocularsKey = inputManager.GetKey (BirdKeys.BINOCULARS);
             binocularsKey.OnKeyDown += PutBinoculars;
             binocularsKey.OnKeyUp += RemoveBinoculars;
 
@@ -121,7 +120,7 @@ namespace Birdwatcher.Controller.Cameras {
 
             uiController.SetMainDisplay ("Identificando nova espécie...");
             Log.V ($"Identificando nova espécie em {IDENTIFY_TIME} segundos");
-            
+
             float t = 0;
             while (t < IDENTIFY_TIME) {
 

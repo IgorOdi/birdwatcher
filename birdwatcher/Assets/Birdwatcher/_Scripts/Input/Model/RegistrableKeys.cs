@@ -2,8 +2,7 @@
 
     public enum BirdKeys {
 
-        A,
-        B,
+        BINOCULARS,
         CROUCH,
         UP,
         DOWN,
