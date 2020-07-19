@@ -1,15 +1,15 @@
 ﻿using Birdwatcher.Global;
 using Birdwatcher.Input;
 using Birdwatcher.Model.Player;
-using Birdwatcher.Utils;
 using UnityEngine;
 
 namespace Birdwatcher.Controller.Player {
 
     [RequireComponent (typeof (CharacterController))]
-    public class PlayerController : MonoBehaviour, IPausable {
+    public class PlayerController : BaseController {
 
         public PlayerData playerData = new PlayerData ();
+        public override UpdatableTypes UpdatableTypes { get { return UpdatableTypes.NORMAL; } }
 
         private InputManager inputManager;
         private CharacterController controller;
@@ -21,15 +21,14 @@ namespace Birdwatcher.Controller.Player {
         private int speedParam;
         private int directionParam;
 
-        private float playerTurnSensibility = BASE_SENSIBILITY;
         private const float BASE_SENSIBILITY = 3;
 
         private const string SPEED_PARAM = "Speed";
         private const string DIRECTION_PARAM = "Direction";
 
-        void Awake () => Initialize ();
+        public override void Initialize () {
 
-        private void Initialize () {
+            base.Initialize ();
 
             controller = GetComponent<CharacterController> ();
             animator = GetComponentInChildren<Animator> ();
@@ -41,12 +40,9 @@ namespace Birdwatcher.Controller.Player {
             var crouchKey = inputManager.GetKey (BirdKeys.CROUCH);
             crouchKey.OnKeyDown += () => isCrouched = true;
             crouchKey.OnKeyUp += () => isCrouched = false;
-
-            playerTurnSensibility = BASE_SENSIBILITY;
-            this.RegisterPausable ();
         }
 
-        public void Update () {
+        public override void OnUpdate () {
 
             if (controller.isGrounded)
                 moveDirection.y = 0f;
@@ -59,18 +55,10 @@ namespace Birdwatcher.Controller.Player {
             moveDirection.y += -9f * Time.deltaTime;
 
             controller.Move (moveDirection);
-            transform.eulerAngles += Vector3.up * inputManager.GetMouseAxis (MouseAxis.X) * playerTurnSensibility;
+            transform.eulerAngles += Vector3.up * inputManager.GetMouseAxis (MouseAxis.X) * BASE_SENSIBILITY;
 
             animator.SetFloat (speedParam, velocity.magnitude);
             animator.SetFloat (directionParam, velocity.z);
-        }
-
-        public void OnPause () {
-            playerTurnSensibility = 0;
-        }
-
-        public void OnUnpause () {
-            playerTurnSensibility = BASE_SENSIBILITY;
         }
     }
 }

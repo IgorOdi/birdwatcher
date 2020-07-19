@@ -5,7 +5,9 @@ using UnityEngine;
 
 namespace Birdwatcher.Controller.Cameras {
 
-    public class CameraController : MonoBehaviour, IPausable {
+    public class CameraController : BaseController {
+
+        public override UpdatableTypes UpdatableTypes { get { return UpdatableTypes.LATE; } }
 
         protected InputManager inputManager;
         protected CinemachineVirtualCamera virtualCamera;
@@ -13,20 +15,16 @@ namespace Birdwatcher.Controller.Cameras {
         private float mouseVerticalLook;
         private float mouseHorizontalLook;
 
-        private float sensibility = BASE_SENSIBILITY;
         private const float BASE_SENSIBILITY = 3;
 
-        private void Awake () => Initialize ();
+        public override void Initialize () {
 
-        public virtual void Initialize () {
+            base.Initialize ();
 
             inputManager = SingletonManager.GetSingleton<InputManager> ();
             virtualCamera = GetComponent<CinemachineVirtualCamera> ();
 
             SingletonManager.GetSingleton<GameManager> ().ToggleCursor (locked: true);
-            this.RegisterPausable ();
-
-            sensibility = BASE_SENSIBILITY;
         }
 
         public void SetLookPoint (Transform lookPoint) {
@@ -35,21 +33,13 @@ namespace Birdwatcher.Controller.Cameras {
             virtualCamera.m_LookAt = lookPoint;
         }
 
-        private void LateUpdate () {
+        public override void OnLateUpdate () {
 
-            mouseVerticalLook += inputManager.GetMouseAxis (MouseAxis.Y) * sensibility;
+            mouseVerticalLook += inputManager.GetMouseAxis (MouseAxis.Y) * BASE_SENSIBILITY;
             mouseVerticalLook = Mathf.Clamp (mouseVerticalLook, -80, 40);
 
-            mouseHorizontalLook += inputManager.GetMouseAxis (MouseAxis.X) * sensibility;
+            mouseHorizontalLook += inputManager.GetMouseAxis (MouseAxis.X) * BASE_SENSIBILITY;
             transform.eulerAngles = Vector3.up * mouseHorizontalLook + Vector3.left * mouseVerticalLook;
-        }
-
-        public void OnPause () {
-            sensibility = 0;
-        }
-
-        public void OnUnpause () {
-            sensibility = BASE_SENSIBILITY;
         }
     }
 }

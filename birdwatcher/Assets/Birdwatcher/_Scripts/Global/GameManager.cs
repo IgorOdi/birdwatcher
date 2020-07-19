@@ -35,5 +35,24 @@ namespace Birdwatcher.Global {
                 Log.V ("Unlocked Mouse");
             }
         }
+
+        #region UPDATING SESSION
+
+        void Update () {
+            if (CurrentGameSession != null)
+                CurrentGameSession.SessionUpdate ();
+        }
+
+        void FixedUpdate () {
+            if (CurrentGameSession != null)
+                CurrentGameSession.SessionFixedUpdate ();
+        }
+
+        void LateUpdate () {
+            if (CurrentGameSession != null)
+                CurrentGameSession.SessionLateUpdate ();
+        }
+
+        #endregion
     }
 }

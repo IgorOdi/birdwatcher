@@ -1,11 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Birdwatcher.Global;
 using Birdwatcher.Model.Birds;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Birdwatcher.UI.Journal {
+namespace Birdwatcher.UI.Journal
+{
 
     public class JournalUIData : UIData {
 

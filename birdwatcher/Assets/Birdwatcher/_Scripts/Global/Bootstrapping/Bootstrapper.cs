@@ -2,7 +2,7 @@
 using Birdwatcher.UI;
 using UnityEngine;
 
-namespace Birdwatcher.Global {
+namespace Birdwatcher.Global.Bootstrapping {
 
     public class Bootstrapper : MonoBehaviour {
 

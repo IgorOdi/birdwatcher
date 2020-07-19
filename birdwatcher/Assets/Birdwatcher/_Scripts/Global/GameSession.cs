@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Birdwatcher.Global.Updating;
 using Birdwatcher.Input;
 using Birdwatcher.Model.Birds;
 using Birdwatcher.UI;
@@ -8,7 +9,7 @@ namespace Birdwatcher.Global {
     public class GameSession {
 
         public List<IObservable> IdentifiedSpecies { get; set; } = new List<IObservable> ();
-        public List<IPausable> pausables { get; } = new List<IPausable> ();
+        public List<IUpdatable> Updatables { get; } = new List<IUpdatable> ();
         public bool IsPaused { get { return pauseController != null; } }
 
         private PauseController pauseController;
@@ -26,15 +27,38 @@ namespace Birdwatcher.Global {
             InputManager inputManager = SingletonManager.GetSingleton<InputManager> ();
 
             inputManager.GetKey (BirdKeys.PAUSE).OnKeyDown += () => {
-                if (!IsPaused) OnPause ();
-                else OnUnpause ();
+                if (!IsPaused) OnSessionPause ();
+                else OnSessionUnpause ();
             };
         }
 
-        public void OnPause () {
+        public void SessionUpdate () {
 
-            for (int i = 0; i < pausables.Count; i++)
-                pausables[i].OnPause ();
+            if (IsPaused) return;
+            for (int i = 0; i < Updatables.Count; i++)
+
+                if (Updatables[i].UpdatableTypes.Equals (UpdatableTypes.NORMAL))
+                    Updatables[i].OnUpdate ();
+        }
+
+        public void SessionFixedUpdate () {
+
+            if (IsPaused) return;
+            for (int i = 0; i < Updatables.Count; i++)
+                if (Updatables[i].UpdatableTypes.Equals (UpdatableTypes.FIXED))
+                    Updatables[i].OnFixedUpdate ();
+        }
+
+        public void SessionLateUpdate () {
+
+            if (IsPaused) return;
+            for (int i = 0; i < Updatables.Count; i++) {
+                if (Updatables[i].UpdatableTypes.Equals (UpdatableTypes.LATE))
+                    Updatables[i].OnLateUpdate ();
+            }
+        }
+
+        public void OnSessionPause () {
 
             SingletonManager.GetSingleton<UI.UIManager> ().LoadUI (new UI.PauseUIData (), (controller) => {
 
@@ -42,12 +66,9 @@ namespace Birdwatcher.Global {
             });
         }
 
-        public void OnUnpause () {
+        public void OnSessionUnpause () {
 
-            pauseController.UnloadPauseMenus ();
-
-            for (int i = 0; i < pausables.Count; i++)
-                pausables[i].OnUnpause ();
+            pauseController.UnloadPauseMenus ();;
         }
     }
 }

@@ -1,11 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Birdwatcher.Global;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Birdwatcher.UI {
+namespace Birdwatcher.UI
+{
 
     public enum PauseButton {
 
