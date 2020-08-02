@@ -1,16 +1,14 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Birdwatcher.Model.Player {
 
-    [System.Serializable]
+    [Serializable]
     public class PlayerData {
 
         [SerializeField]
         private float Speed;
-        private float SlowedSpeed {
-            get { return Speed / 2; }
-            set { }
-        }
+        private float SlowedSpeed { get { return Speed / 2; } }
 
         public float GetSpeed (bool isObserving) {
 

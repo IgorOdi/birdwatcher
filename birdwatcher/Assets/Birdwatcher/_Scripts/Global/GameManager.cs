@@ -11,14 +11,25 @@ namespace Birdwatcher.Global {
         public void Initialize () {
 
             this.SubscribeAsSingleton ();
+            SetGameplayKeys ();
+            CurrentGameSession = new GameSession ();
+        }
+
+        public void SetGameplayKeys () {
+
             var inputManager = SingletonManager.GetSingleton<InputManager> ();
 
-            //Fix for out of gameplay
+            inputManager.ClearKeys ();
             inputManager.RegisterKey (BirdKeys.BINOCULARS, KeyCode.Mouse1);
             inputManager.RegisterKey (BirdKeys.CROUCH, KeyCode.LeftControl);
             inputManager.RegisterKey (BirdKeys.PAUSE, KeyCode.Tab);
+        }
 
-            CurrentGameSession = new GameSession ();
+        public void SetMenuKeys () {
+
+            var inputManager = SingletonManager.GetSingleton<InputManager> ();
+            inputManager.ClearKeys ();
+            //TODO: Configure for menus;
         }
 
         public void ToggleCursor (bool locked) {
@@ -27,29 +38,29 @@ namespace Birdwatcher.Global {
 
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
-                Log.V ("Locked Mouse");
+                Log.V ("Locked Cursor");
             } else {
 
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
-                Log.V ("Unlocked Mouse");
+                Log.V ("Unlocked Cursor");
             }
         }
 
-        #region UPDATING SESSION
+        #region UPDATING GAME SESSION
 
-        void Update () {
-            if (CurrentGameSession != null)
+        private void Update () {
+            if (CurrentGameSession != null && !CurrentGameSession.IsPaused)
                 CurrentGameSession.SessionUpdate ();
         }
 
-        void FixedUpdate () {
-            if (CurrentGameSession != null)
+        private void FixedUpdate () {
+            if (CurrentGameSession != null && CurrentGameSession.IsPaused)
                 CurrentGameSession.SessionFixedUpdate ();
         }
 
-        void LateUpdate () {
-            if (CurrentGameSession != null)
+        private void LateUpdate () {
+            if (CurrentGameSession != null && CurrentGameSession.IsPaused)
                 CurrentGameSession.SessionLateUpdate ();
         }
 

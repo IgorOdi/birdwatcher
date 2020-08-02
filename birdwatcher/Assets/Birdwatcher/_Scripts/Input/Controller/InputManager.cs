@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Birdwatcher.Global;
+using Birdwatcher.Global.Updating;
 using UnityEngine;
 
 namespace Birdwatcher.Input {
@@ -45,7 +46,7 @@ namespace Birdwatcher.Input {
             registeredKeys.Clear ();
         }
 
-        private void Update () {
+        public void OnUpdate () {
 
             foreach (KeyValuePair<BirdKeys, InputKey> pair in registeredKeys) {
 

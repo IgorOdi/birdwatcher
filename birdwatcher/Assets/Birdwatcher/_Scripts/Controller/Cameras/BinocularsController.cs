@@ -14,6 +14,8 @@ namespace Birdwatcher.Controller.Cameras {
 
     public class BinocularsController : CameraController {
 
+        public override UpdatableTypes UpdatableTypes { get { return UpdatableTypes.NORMAL | UpdatableTypes.LATE; } }
+
         private Binoculars binoculars;
         private Volume volume;
         private VolumeProfile volumeProfile;
@@ -70,7 +72,7 @@ namespace Birdwatcher.Controller.Cameras {
             CancelIdentifying ();
         }
 
-        private void Update () {
+        public override void OnUpdate () {
 
             if (isUsing) {
                 Zoom (inputManager.GetMouseAxis (MouseAxis.SCROLL_WHEEL));
@@ -149,7 +151,6 @@ namespace Birdwatcher.Controller.Cameras {
             if (binoculars == null || !isUsing) return;
             Gizmos.color = Color.cyan;
             Gizmos.DrawRay (transform.position, transform.forward * binoculars.FocusPoint);
-            //Gizmos.DrawWireSphere (transform.position + transform.forward * binoculars.FocusPoint, 2f);
         }
     }
 }

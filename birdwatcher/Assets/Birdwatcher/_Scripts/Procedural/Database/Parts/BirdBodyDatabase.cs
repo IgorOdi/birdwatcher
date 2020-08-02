@@ -3,6 +3,6 @@ using UnityEngine;
 
 namespace Birdwatcher.Procedural.Database
 {
-    [CreateAssetMenu (fileName = "New Body Database", menuName = "Database/Parts/Bird/Body")]
+    [CreateAssetMenu (fileName = "New Body Database", menuName = "Database/Birds/Parts/Body")]
     public class BirdBodyDatabase : BirdPartDatabase<Body> { }
 }

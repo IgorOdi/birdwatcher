@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Birdwatcher.Procedural.Database {
 
-    [CreateAssetMenu (menuName = "Database/Bird/Possible Types", fileName = "New Possible Type DB")]
+    [CreateAssetMenu (fileName = "New Possible Type DB", menuName = "Database/Birds/Possible Types")]
     public class BirdPossibleTypes : ScriptableObject {
 
         public BirdType BirdType;

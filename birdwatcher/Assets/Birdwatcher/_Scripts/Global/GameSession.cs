@@ -34,7 +34,6 @@ namespace Birdwatcher.Global {
 
         public void SessionUpdate () {
 
-            if (IsPaused) return;
             for (int i = 0; i < Updatables.Count; i++)
 
                 if (Updatables[i].UpdatableTypes.Equals (UpdatableTypes.NORMAL))
@@ -43,7 +42,6 @@ namespace Birdwatcher.Global {
 
         public void SessionFixedUpdate () {
 
-            if (IsPaused) return;
             for (int i = 0; i < Updatables.Count; i++)
                 if (Updatables[i].UpdatableTypes.Equals (UpdatableTypes.FIXED))
                     Updatables[i].OnFixedUpdate ();
@@ -51,7 +49,6 @@ namespace Birdwatcher.Global {
 
         public void SessionLateUpdate () {
 
-            if (IsPaused) return;
             for (int i = 0; i < Updatables.Count; i++) {
                 if (Updatables[i].UpdatableTypes.Equals (UpdatableTypes.LATE))
                     Updatables[i].OnLateUpdate ();
